@@ -120,6 +120,19 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    cursor: default;
+  }
+  a, button, [role="button"], select, input[type="submit"], input[type="button"], summary, [tabindex]:not([tabindex="-1"]) {
+    cursor: pointer !important;
+  }
+  label {
+    cursor: pointer;
+  }
+  input, textarea {
+    cursor: text;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    cursor: pointer;
   }
   body {
     @apply bg-background text-foreground;
@@ -127,4 +140,34 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Custom HMS Logo Bubble & Hover Effect */
+@keyframes bubble-up {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.bubble {
+  position: absolute;
+  bottom: 0px;
+  width: 6px;
+  height: 6px;
+  background-color: rgba(96, 165, 250, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.group:hover .bubble {
+  animation: bubble-up 1.5s ease-out infinite;
 }

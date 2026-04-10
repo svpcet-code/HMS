@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+ADMIN
+DOCTOR
+RECEPTIONIST
+PATIENT
+}
+
+model User {
+id        String   @id @default(cuid())
+name      String?
+email     String?  @unique
+password  String?
+role      Role     @default(PATIENT)
+resetToken       String?   @unique
+resetTokenExpiry DateTime?
+createdAt DateTime @default(now())
+
+patient   Patient?
+doctor    Doctor?
+}
+
+model Patient {
+id            String   @id @default(cuid())
+name          String
+dateOfBirth   DateTime
+gender        String
+contactNumber String
+address       String?
+bloodGroup    String?
+
+userId String? @unique
+user   User?   @relation(fields: [userId], references: [id])
+
+appointments  Appointment[]
+prescriptions Prescription[]
+invoices      Invoice[]
+admissions    Admission[]
+labTests      LabTest[]
+
+createdAt DateTime @default(now())
+}
+
+model Doctor {
+id             String   @id @default(cuid())
+name           String
+specialization String
+contactNumber  String
+workingHours   String?
+image          String?
+
+userId String @unique
+user   User   @relation(fields: [userId], references: [id])
+
+appointments  Appointment[]
+prescriptions Prescription[]
+
+createdAt DateTime @default(now())
+}
+
+model Appointment {
+id        String   @id @default(cuid())
+patientId String
+doctorId  String
+date      DateTime
+status    String   @default("SCHEDULED")
+
+patient Patient @relation(fields: [patientId], references: [id])
+doctor  Doctor  @relation(fields: [doctorId], references: [id])
+
+createdAt DateTime @default(now())
+}
+
+model Prescription {
+id        String   @id @default(cuid())
+patientId String
+doctorId  String
+details   String
+
+patient Patient @relation(fields: [patientId], references: [id])
+doctor  Doctor  @relation(fields: [doctorId], references: [id])
+
+createdAt DateTime @default(now())
+}
+
+model Invoice {
+id        String   @id @default(cuid())
+patientId String
+amount    Float
+status    String   @default("UNPAID")
+type      String   // Service type: Consultation, Lab Test, etc.
+
+patient Patient @relation(fields: [patientId], references: [id])
+
+createdAt DateTime @default(now())
+}
+
+model Bed {
+id         String   @id @default(cuid())
+bedNumber  String
+ward       String
+status     String   @default("AVAILABLE")
+
+admissions Admission[]
+}
+
+model Admission {
+id        String   @id @default(cuid())
+patientId String
+bedId     String
+admitDate DateTime @default(now())
+discharge DateTime?
+status    String    @default("In Treatment")
+
+patient Patient @relation(fields: [patientId], references: [id])
+bed     Bed     @relation(fields: [bedId], references: [id])
+}
+
+model BloodBank {
+id         String @id @default(cuid())
+bloodGroup String @unique
+units      Int    @default(0)
+}
+
+model Medicine {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  stock       Int      @default(0)
+  price       Float
+  expiryDate  DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model LabTest {
+  id        String   @id @default(cuid())
+  testName  String
+  patientId String
+  doctorId  String?
+  date      DateTime @default(now())
+  status    String   @default("PENDING")
+  result    String?
+
+  patient   Patient  @relation(fields: [patientId], references: [id])
+}
