@@ -68,8 +68,7 @@ export async function GET() {
         }
       });
     }
-      });
-    }
+
 
     // 4. Create a Patient User
     const patientUser = await prisma.user.upsert({

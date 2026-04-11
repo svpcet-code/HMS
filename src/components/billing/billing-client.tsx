@@ -137,7 +137,7 @@ export function BillingClient({ initialInvoices, patients }: BillingClientProps)
           </div>
           <div className="flex gap-2 w-full sm:w-auto">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="outline" className="flex-1 sm:flex-none h-12 rounded-2xl text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-6 font-bold">
                   <Filter className="mr-2 h-4 w-4" /> {statusFilter || "Filter"}
                 </Button>
@@ -196,7 +196,7 @@ export function BillingClient({ initialInvoices, patients }: BillingClientProps)
                   <TableCell>{getStatusBadge(invoice.status)}</TableCell>
                   <TableCell className="text-right pr-8">
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuTrigger>
                         <Button variant="ghost" size="icon" className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
