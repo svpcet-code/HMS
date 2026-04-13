@@ -47,7 +47,7 @@ export function Header() {
             <div className="bubble left-3" style={{ animationDelay: '0.5s' }}></div>
             
             <Image 
-              src="/hms-logo.png" 
+              src="/hms-logo.svg" 
               alt="HMS Logo" 
               fill 
               className="object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.05)] group-hover:drop-shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all duration-500"

@@ -64,7 +64,7 @@ export function Sidebar() {
               <div className="bubble left-8" style={{ animationDelay: '0.8s' }}></div>
               
               <Image
-                src="/hms-logo.png"
+                src="/hms-logo.svg"
                 alt="HMS Logo"
                 fill
                 className="object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.05)] group-hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all duration-500"
