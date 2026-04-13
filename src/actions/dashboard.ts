@@ -32,25 +32,25 @@ export async function getDashboardChartsData() {
       color: barColors[label] || "#94a3b8"
     }));
 
-    // 2. Get Patient Status (Admissions)
-    const admissions = await prisma.admission.findMany();
+    // 2. Get Patient Gender Distribution (replacing Admission Status for better visibility)
+    const patients = await prisma.patient.findMany();
 
-    const statusCounts: Record<string, number> = {};
-    admissions.forEach(a => {
-      const status = a.status;
-      statusCounts[status] = (statusCounts[status] || 0) + 1;
+    const genderCounts: Record<string, number> = {};
+    patients.forEach(p => {
+      const gender = p.gender || "Other";
+      genderCounts[gender] = (genderCounts[gender] || 0) + 1;
     });
 
-    const statusColors: Record<string, string> = {
-      Recovered: "#10b981",
-      "In Treatment": "#f59e0b",
-      Critical: "#ef4444",
+    const genderColors: Record<string, string> = {
+      Male: "#3b82f6",
+      Female: "#ec4899",
+      Other: "#94a3b8",
     };
 
-    const donutData = Object.entries(statusCounts).map(([label, value]) => ({
+    const donutData = Object.entries(genderCounts).map(([label, value]) => ({
       label,
       value: Number(value),
-      color: statusColors[label] || "#94a3b8"
+      color: genderColors[label] || "#94a3b8"
     }));
 
     // Ensure we return valid arrays even if empty
@@ -60,7 +60,8 @@ export async function getDashboardChartsData() {
         { label: "Neurology", value: 0, color: "#8b5cf6" }
       ], 
       donutData: donutData.length > 0 ? donutData : [
-        { label: "In Treatment", value: 0, color: "#f59e0b" }
+        { label: "Male", value: 0, color: "#3b82f6" },
+        { label: "Female", value: 0, color: "#ec4899" }
       ]
     };
   } catch (error) {

@@ -141,14 +141,14 @@ export default function Dashboard() {
         {/* Patient Demographics 3D Donut Chart */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-1 flex flex-col relative overflow-hidden transition-all hover:shadow-2xl hover:shadow-emerald-500/5 min-h-[450px]">
           <div className="absolute top-6 left-6 z-10 pointer-events-none">
-            <h3 className="font-black text-slate-800 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">Overall Patient Status</h3>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest mt-1 tracking-tighter shadow-sm">Real-time Recovery Metrics</p>
+            <h3 className="font-black text-slate-800 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">Patient Demographics</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest mt-1 tracking-tighter shadow-sm">Gender Distribution Metrics</p>
           </div>
 
           {chartsData && !loading && (
             <>
               <ChartLegend 
-                title="Health Status" 
+                title="Patient Gender" 
                 items={chartsData.donutData} 
               />
               <div key={`donut-${refreshKey}`} className="w-full h-full flex-1 min-h-[400px]">
