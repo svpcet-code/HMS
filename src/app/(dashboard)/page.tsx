@@ -113,7 +113,7 @@ export default function Dashboard() {
         {/* Weekly Appointments 3D Bar Chart */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 p-1 flex flex-col relative overflow-hidden transition-all hover:shadow-2xl hover:shadow-indigo-500/5 min-h-[450px]">
           <div className="absolute top-6 left-6 z-10 pointer-events-none">
-            <h3 className="font-black text-slate-800 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">Patients by Department</h3>
+            <h3 className="font-black text-slate-800 dark:text-slate-100 uppercase tracking-tighter text-lg leading-none">Doctors by Specialist Field</h3>
             <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest mt-1 tracking-tighter shadow-sm">Live Distribution History</p>
           </div>
           

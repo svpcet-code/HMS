@@ -2,19 +2,17 @@
 
 import prisma from "@/lib/prisma";
 
+import { unstable_noStore as noStore } from "next/cache";
+
 export async function getDashboardChartsData() {
+  noStore();
   try {
-    // 1. Get Patients by Department (Doctor Specialization)
-    const appts = await prisma.appointment.findMany({
-      include: {
-        doctor: true
-      }
-    });
+    // 1. Get Doctors by Department (Specialization)
+    const doctors = await prisma.doctor.findMany();
 
     const deptCounts: Record<string, number> = {};
-    appts.forEach(a => {
-      // Standardize to case-sensitive or whatever we use in colors
-      const dept = a.doctor.specialization;
+    doctors.forEach(d => {
+      const dept = d.specialization;
       deptCounts[dept] = (deptCounts[dept] || 0) + 1;
     });
 
@@ -25,6 +23,7 @@ export async function getDashboardChartsData() {
       Pediatrics: "#10b981",
       Oncology: "#6366f1",
       Gynecology: "#ec4899",
+      "General Medicine": "#3b82f6",
     };
 
     const barData = Object.entries(deptCounts).map(([label, value]) => ({
