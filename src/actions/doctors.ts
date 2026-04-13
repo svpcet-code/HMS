@@ -1,9 +1,10 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 
 export async function getDoctors() {
+  noStore();
   try {
     const doctors = await prisma.doctor.findMany({
       orderBy: { createdAt: "desc" },
@@ -23,8 +24,15 @@ export async function createDoctor(data: {
   image?: string;
 }) {
   try {
-    const doctor = await prisma.doctor.create({
-      data: {
+    const doctor = await prisma.doctor.upsert({
+      where: { userId: data.userId },
+      update: {
+        name: data.name,
+        specialization: data.specialization,
+        contactNumber: data.contactNumber,
+        image: data.image,
+      },
+      create: {
         name: data.name,
         specialization: data.specialization,
         contactNumber: data.contactNumber,
